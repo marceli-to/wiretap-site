@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php artisan make:request:*)",
+      "WebFetch(domain:fluxui.dev)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
