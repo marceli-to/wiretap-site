@@ -1,19 +1,17 @@
-<div class="space-y-6">
+<div class="space-y-8">
   <!-- Header -->
   <div class="sm:flex sm:items-center sm:justify-between">
     <div>
-      <h1 class="text-2xl font-mono uppercase text-gray-900 dark:text-white">Wiretap</h1>
-      <p class="mt-2 text-sm dark:text-gray-300">
+      <p class="mt-2 text-lg dark:text-gray-300 max-w-xl">
         Taps into your systems and monitors and analyzes your application logs in (almost) real-time.
       </p>
     </div>
     <div class="mt-4 sm:mt-0">
       <flux:modal.trigger name="filters">
-        <flux:button variant="outline" size="sm" icon="funnel" iconVariant="outline">Filters</flux:button>
+        <flux:button variant="outline" icon="funnel" iconVariant="outline">Filters</flux:button>
       </flux:modal.trigger>
     </div>
   </div>
-
 
   <!-- Logs Table -->
   <flux:table :paginate="$logs">
@@ -177,8 +175,8 @@
       @if($this->activeLog)
         <div class="space-y-4">
           <!-- Server Information -->
+          <h3 class="font-medium text-sm text-gray-900 dark:text-white mb-3">Server Information</h3>
           <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <h3 class="font-medium text-sm text-gray-900 dark:text-white mb-3">Server Information</h3>
             <div class="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <span class="font-medium text-gray-900 dark:text-gray-400">Hostname:</span>

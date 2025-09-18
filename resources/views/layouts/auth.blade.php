@@ -20,7 +20,9 @@
 <body class="font-sans antialiased bg-gray-50 dark:bg-gray-900">
     <div class="min-h-screen flex flex-col justify-center items-center px-6 py-12">
         <div class="mb-8">
-            <flux:brand href="/" logo="/img/logo.svg" />
+            <flux:brand href="/" class="!h-auto !w-48">
+              <x-logo class="!h-auto !w-full" />
+            </flux:brand>
         </div>
 
         <div class="w-full max-w-md">

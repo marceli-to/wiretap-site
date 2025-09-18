@@ -24,13 +24,11 @@ $textClasses = Flux::classes()
                 {{ $logo }}
             </div>
         <?php else: ?>
-            <div class="flex items-center justify-center h-8 rounded-sm overflow-hidden shrink-0">
-                <?php if ($logo): ?>
-                    <img src="{{ $logo }}" alt="{{ $alt }}" class="h-8" />
-                <?php else: ?>
-                    {{ $slot }}
-                <?php endif; ?>
-            </div>
+            <?php if ($logo): ?>
+                <img src="{{ $logo }}" alt="{{ $alt }}" class="h-8" />
+            <?php else: ?>
+                {{ $slot }}
+            <?php endif; ?>
         <?php endif; ?>
 
         <div class="{{ $textClasses }}">{{ $name }}</div>
@@ -42,13 +40,11 @@ $textClasses = Flux::classes()
                 {{ $logo }}
             </div>
         <?php else: ?>
-            <div class="flex items-center justify-center h-8 rounded-sm overflow-hidden shrink-0">
-                <?php if ($logo): ?>
-                    <img src="{{ $logo }}" alt="{{ $alt }}" class="h-8" />
-                <?php else: ?>
-                    {{ $slot }}
-                <?php endif; ?>
-            </div>
+            <?php if ($logo): ?>
+                <img src="{{ $logo }}" alt="{{ $alt }}" class="h-8" />
+            <?php else: ?>
+                {{ $slot }}
+            <?php endif; ?>
         <?php endif; ?>
     </a>
 <?php endif; ?>

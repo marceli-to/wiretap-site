@@ -20,8 +20,12 @@
 <body class="font-sans antialiased bg-gray-50 dark:bg-gray-900">
 	<div class="min-h-screen">
 		<!-- Header -->
-		<flux:header container class="bg-white min-h-16 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center">
-      <flux:brand href="{{ route('logs.dashboard') }}" logo="/img/logo.svg" />
+		<flux:header container class="bg-white min-h-16 lg:min-h-18 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 flex items-center">
+      
+      <flux:brand  href="{{ route('logs.dashboard') }}" class="!h-auto !w-40">
+        <x-logo class="!h-auto !w-full" />
+      </flux:brand>
+
       <flux:spacer />
 			{{-- <flux:brand
 				href="{{ route('logs.dashboard') }}"
@@ -37,8 +41,6 @@
 					Logs
 				</flux:navbar.item>
 			</flux:navbar>
-
-			
 
 			<flux:navbar class="me-4">
 				<flux:navbar.item icon="magnifying-glass" href="#" label="Search" />
@@ -66,7 +68,7 @@
 		</flux:header>
 
 		<!-- Page Content -->
-		<main class="py-12">
+		<main class="py-8">
 			<div class="max-w-7xl mx-auto px-6 lg:px-8">
 				{{ $slot }}
 			</div>
