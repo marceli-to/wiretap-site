@@ -45,7 +45,16 @@
 					{{-- <flux:menu.item icon="user-circle">Profile</flux:menu.item>
 					<flux:menu.item icon="cog-6-tooth">Settings</flux:menu.item>
 					<flux:menu.separator /> --}}
-					<flux:menu.item icon="arrow-right-start-on-rectangle">Sign out</flux:menu.item>
+					<form method="POST" action="{{ route('logout') }}">
+						@csrf
+						<flux:menu.item
+							icon="arrow-right-start-on-rectangle"
+							onclick="this.closest('form').submit()"
+							type="button"
+						>
+							Sign out
+						</flux:menu.item>
+					</form>
 				</flux:menu>
 			</flux:dropdown>
 		</flux:header>
