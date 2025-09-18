@@ -28,7 +28,6 @@ class LogsDashboard extends Component
 		'envFilter'     => ['except' => 'hide_local'],
 		'sortBy'        => ['except' => 'timestamp'],
 		'sortDirection' => ['except' => 'desc'],
-		'page'          => ['except' => 1],
 	];
 
 	public function updatingSearch()      { $this->resetPage(); }
