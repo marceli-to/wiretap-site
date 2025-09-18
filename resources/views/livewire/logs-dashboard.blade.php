@@ -2,8 +2,8 @@
   <!-- Header -->
   <div class="sm:flex sm:items-center sm:justify-between">
     <div>
-      <p class="mt-2 text-lg dark:text-gray-300 max-w-xl">
-        Taps into your systems and monitors and analyzes your application logs in (almost) real-time.
+      <p class="mt-2 text-lg dark:text-gray-300 text-pretty">
+        Taps into your systems and monitors and analyzes your application logs in (almost) realtime.
       </p>
     </div>
     <div class="mt-4 sm:mt-0">

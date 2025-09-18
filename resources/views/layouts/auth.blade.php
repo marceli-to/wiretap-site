@@ -18,18 +18,21 @@
 @fluxAppearance
 </head>
 <body class="font-sans antialiased bg-gray-50 dark:bg-gray-900">
-    <div class="min-h-screen flex flex-col justify-center items-center px-6 py-12">
-        <div class="mb-8">
-            <flux:brand href="/" class="!h-auto !w-48">
-              <x-logo class="!h-auto !w-full" />
-            </flux:brand>
-        </div>
-
-        <div class="w-full max-w-md">
-            @yield('content')
-        </div>
+  <div class="min-h-screen flex flex-col justify-center items-center px-6 py-6">
+    <div class="w-full flex flex-col items-center justify-center max-w-md grow-1">
+      <div class="mb-8">
+          <flux:brand href="/" class="!h-auto !w-48">
+            <x-logo class="!h-auto !w-full" />
+          </flux:brand>
+      </div>
+      <div class="w-full">
+          @yield('content')
+      </div>
     </div>
-
-    @fluxScripts
+    <div class="text-center font-mono text-xs text-gray-500 dark:text-gray-200">
+      Made with ❤️ by <a href="https://marceli.to" target="_blank" class="hover:underline hover:underline-offset-2">marceli.to</a>
+    </div>
+  </div>
+  @fluxScripts
 </body>
 </html>

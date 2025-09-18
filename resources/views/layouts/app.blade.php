@@ -18,7 +18,7 @@
 @fluxAppearance
 </head>
 <body class="font-sans antialiased bg-gray-50 dark:bg-gray-900">
-	<div class="min-h-screen">
+	<div class="min-h-screen flex flex-col pb-4">
 		<!-- Header -->
 		<flux:header container class="bg-white min-h-16 lg:min-h-18 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 flex items-center">
       
@@ -27,25 +27,6 @@
       </flux:brand>
 
       <flux:spacer />
-			{{-- <flux:brand
-				href="{{ route('logs.dashboard') }}"
-				name="AppLog Dashboard"
-				class="text-xl font-semibold"
-			/> --}}
-
-			{{-- <flux:navbar class="-mb-px">
-				<flux:navbar.item icon="chart-bar" href="{{ route('logs.dashboard') }}" current>
-					Dashboard
-				</flux:navbar.item>
-				<flux:navbar.item icon="document-text" href="{{ route('logs.dashboard') }}">
-					Logs
-				</flux:navbar.item>
-			</flux:navbar>
-
-			<flux:navbar class="me-4">
-				<flux:navbar.item icon="magnifying-glass" href="#" label="Search" />
-				<flux:navbar.item icon="bell" href="#" label="Notifications" />
-			</flux:navbar> --}}
 
 			<flux:dropdown position="bottom" align="end">
         <flux:profile avatar="/img/avatar.jpg" />
@@ -68,11 +49,14 @@
 		</flux:header>
 
 		<!-- Page Content -->
-		<main class="py-8">
+		<main class="py-6 flex-1">
 			<div class="max-w-7xl mx-auto px-6 lg:px-8">
 				{{ $slot }}
 			</div>
 		</main>
+    <div class="text-center font-mono text-xs text-gray-500 dark:text-gray-200">
+      Made with ❤️ by <a href="https://marceli.to" target="_blank" class="hover:underline hover:underline-offset-2">marceli.to</a>
+    </div>
 	</div>
 
 	@fluxScripts
