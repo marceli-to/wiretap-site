@@ -122,11 +122,11 @@
   </flux:table>
 
   <!-- Single Context Modal -->
-  <flux:modal name="context" class="md:w-96 lg:w-1/2">
+  <flux:modal name="context" class="md:w-96 lg:w-1/3">
     <div class="space-y-6">
       <div>
-        <flux:heading size="lg">Log Context</flux:heading>
-        <flux:subheading>Additional data for this log entry</flux:subheading>
+        <flux:heading size="lg">Context</flux:heading>
+        <flux:subheading>Additional data for this entry</flux:subheading>
       </div>
 
       @if($this->activeContext)
