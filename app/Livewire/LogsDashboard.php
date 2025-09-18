@@ -11,6 +11,7 @@ class LogsDashboard extends Component
 	/** Filters & table state */
 	public string $search = '';
 	public string $levelFilter = '';
+	public string $envFilter = 'hide_local';
 	public string $sortBy = 'timestamp';
 	public string $sortDirection = 'desc';
 
@@ -24,6 +25,7 @@ class LogsDashboard extends Component
 	protected $queryString = [
 		'search'        => ['except' => ''],
 		'levelFilter'   => ['except' => ''],
+		'envFilter'     => ['except' => 'hide_local'],
 		'sortBy'        => ['except' => 'timestamp'],
 		'sortDirection' => ['except' => 'desc'],
 		'page'          => ['except' => 1],
@@ -31,6 +33,7 @@ class LogsDashboard extends Component
 
 	public function updatingSearch()      { $this->resetPage(); }
 	public function updatingLevelFilter() { $this->resetPage(); }
+	public function updatingEnvFilter()   { $this->resetPage(); }
 
 	public function setSort(string $field): void
 	{
@@ -50,7 +53,8 @@ class LogsDashboard extends Component
 
 	public function clearFilters(): void
 	{
-		$this->reset(['search', 'levelFilter']);
+		$this->reset(['search', 'levelFilter', 'envFilter']);
+		$this->envFilter = 'hide_local';
 		$this->sortBy = 'timestamp';
 		$this->sortDirection = 'desc';
 	}
@@ -60,11 +64,23 @@ class LogsDashboard extends Component
 		$this->activeLogId = $id;
 	}
 
+	public function deleteLog(int $id): void
+	{
+		Log::query()->find($id)?->delete();
+		$this->resetPage();
+	}
+
 	/** Livewire computed property: $this->activeContext */
 	public function getActiveContextProperty(): mixed
 	{
 		$log = $this->activeLogId ? Log::query()->select('id', 'context')->find($this->activeLogId) : null;
 		return $log?->context ?? null;
+	}
+
+	/** Livewire computed property: $this->activeLog */
+	public function getActiveLogProperty(): ?Log
+	{
+		return $this->activeLogId ? Log::query()->find($this->activeLogId) : null;
 	}
 
 	public function levelColor(string $level): string
@@ -75,6 +91,17 @@ class LogsDashboard extends Component
 			'info'    => 'blue',
 			'debug'   => 'gray',
 		][$level] ?? 'green';
+	}
+
+	public function envColor(string $env): string
+	{
+		return [
+			'production' => 'green',
+			'staging'    => 'blue',
+			'testing'    => 'blue',
+			'development'=> 'blue',
+			'local'      => 'gray',
+		][strtolower($env)] ?? 'purple';
 	}
 
 	public function render()
@@ -89,6 +116,8 @@ class LogsDashboard extends Component
 				});
 			})
 			->when($this->levelFilter, fn ($q, $lvl) => $q->where('level', $lvl))
+			->when($this->envFilter === 'hide_local', fn ($q) => $q->where('app_env', '!=', 'local'))
+			->when($this->envFilter && $this->envFilter !== 'hide_local' && $this->envFilter !== '', fn ($q) => $q->where('app_env', $this->envFilter))
 			->orderBy($this->sortBy, $this->sortDirection)
 			->paginate(15);
 
@@ -98,6 +127,13 @@ class LogsDashboard extends Component
 			->orderBy('level')
 			->pluck('level');
 
-		return view('livewire.logs-dashboard', compact('logs', 'levels'))->layout('layouts.app');
+		$environments = Log::query()
+			->select('app_env')
+			->distinct()
+			->whereNotNull('app_env')
+			->orderBy('app_env')
+			->pluck('app_env');
+
+		return view('livewire.logs-dashboard', compact('logs', 'levels', 'environments'))->layout('layouts.app');
 	}
 }

@@ -1,0 +1,8 @@
+- filter out local logs
+- show environment as badge in its own color. use different colors for different environments
+- show filter as modal (flyout), add butto to toggle filter
+- show server column in context modal
+- remove table column "server" and replace with environment
+- remove "Clear filters" button in main view (keep in modal)
+- change icons to outline instead of solid
+- add delete button to delete log. use soft deletes
