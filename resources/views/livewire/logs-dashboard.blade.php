@@ -4,7 +4,7 @@
     <div>
       <h1 class="text-2xl font-mono uppercase text-gray-900 dark:text-white">Wiretap</h1>
       <p class="mt-2 text-sm dark:text-gray-300">
-        Taps into your systems and monitors and analyzes your application logs in real-time.
+        Taps into your systems and monitors and analyzes your application logs in (almost) real-time.
       </p>
     </div>
     <div class="mt-4 sm:mt-0">
