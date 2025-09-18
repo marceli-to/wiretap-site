@@ -9,7 +9,7 @@
     </div>
     <div class="mt-4 sm:mt-0">
       <flux:modal.trigger name="filters">
-        <flux:button variant="outline" size="sm" icon="funnel" variant="outline">Filters</flux:button>
+        <flux:button variant="outline" size="sm" icon="funnel" iconVariant="outline">Filters</flux:button>
       </flux:modal.trigger>
     </div>
   </div>
