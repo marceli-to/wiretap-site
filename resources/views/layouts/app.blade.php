@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Taps into your systems and monitors and analyzes your application logs in real-time.">
   <meta name="csrf-token" content="{{ csrf_token() }}">
+    @auth
+    <meta name="user-id" content="{{ auth()->id() }}">
+    @endauth
 <title>{{ config('app.name', 'Wiretap') }}</title>
 <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -15,6 +18,11 @@
 <link rel="preconnect" href="https://fonts.bunny.net">
 <link href="https://fonts.bunny.net/css?family=inter:400,500,600&display=swap" rel="stylesheet" />
 @vite(['resources/css/app.css', 'resources/js/app.js'])
+<script>
+    // Configure Pusher Beams Instance ID (you'll need to set this in your .env)
+    window.pusherBeamsInstanceId = '{{ config('services.pusher.beams_instance_id') }}';
+
+</script>
 @fluxAppearance
 </head>
 <body class="font-sans antialiased bg-gray-50 dark:bg-gray-900">
@@ -27,6 +35,13 @@
       </flux:brand>
 
       <flux:spacer />
+
+      <!-- Notifications Button -->
+      <flux:button id="enable-notifications" variant="ghost" size="sm" class="mr-4">
+          <flux:icon name="bell" />
+          Enable Notifications
+      </flux:button>
+
 
 			<flux:dropdown position="bottom" align="end">
         <flux:profile avatar="/img/avatar.jpg" />

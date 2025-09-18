@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\PusherBeamsController;
 use App\Livewire\LogsDashboard;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,14 @@ Route::get('/verify-email/{id}/{hash}', [VerifyEmailController::class, 'verify']
 Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
     ->middleware(['auth', 'throttle:6,1'])
     ->name('verification.send');
+
+// Push notification routes
+Route::match(['get', 'post'], '/api/pusher/beams-auth', [PusherBeamsController::class, 'beamsAuth'])
+    ->middleware(['auth', 'verified']);
+Route::post('/api/pusher/store-subscription', [PusherBeamsController::class, 'storeSubscription'])
+    ->middleware(['auth', 'verified']);
+Route::get('/api/pusher/check-subscription', [PusherBeamsController::class, 'checkSubscription'])
+    ->middleware(['auth', 'verified']);
 
 // Protected application routes
 Route::get('/', LogsDashboard::class)->middleware(['auth', 'verified']);

@@ -17,6 +17,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Webhook Secret
+    |--------------------------------------------------------------------------
+    |
+    | This secret is used to authenticate incoming webhook requests.
+    | External services should include this in the Authorization header.
+    |
+    */
+
+    'webhook_secret' => env('WEBHOOK_SECRET'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
     |
