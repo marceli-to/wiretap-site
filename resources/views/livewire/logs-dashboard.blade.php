@@ -207,7 +207,31 @@
 
           <!-- Context Data -->
           @if($this->activeContext)
-            <h3 class="font-medium text-sm text-gray-900 dark:text-white mb-3">Context Data</h3>
+            <div class="flex justify-between items-end" x-data="{
+              copied: false,
+              copyToClipboard() {
+                navigator.clipboard.writeText(@js(json_encode($this->activeContext, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)));
+                this.copied = true;
+                setTimeout(() => this.copied = false, 2000);
+              }
+            }">
+              <h3 class="font-medium text-sm text-gray-900 dark:text-white">
+                Context Data
+              </h3>
+              <flux:button
+                size="sm"
+                variant="subtle"
+                square
+                x-on:click="copyToClipboard()"
+                x-bind:tooltip="copied ? 'Copied!' : 'Copy to clipboard'">
+                <span x-show="!copied" x-cloak>
+                  <flux:icon.clipboard-document-list variant="mini" />
+                </span>
+                <span x-show="copied" x-cloak>
+                  <flux:icon.check-badge variant="mini" class="text-green-400" />
+                </span>
+              </flux:button>
+            </div>
             <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
               <pre class="text-sm overflow-x-auto">@json($this->activeContext, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)</pre>
             </div>
@@ -216,13 +240,6 @@
       @else
         <p class="text-sm text-gray-500">No log details available.</p>
       @endif
-
-      <div class="flex">
-        <flux:spacer />
-        <flux:modal.close>
-          <flux:button variant="primary">Close</flux:button>
-        </flux:modal.close>
-      </div>
     </div>
   </flux:modal>
 </div>

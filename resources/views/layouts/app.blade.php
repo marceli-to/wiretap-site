@@ -55,12 +55,11 @@
 			<div class="max-w-7xl mx-auto px-6 lg:px-8">
 				{{ $slot }}
 			</div>
-		</main>
+    </main>
     <div class="text-center font-mono text-xs text-gray-500 dark:text-gray-200">
       Made with ❤️ by <a href="https://marceli.to" target="_blank" class="hover:underline hover:underline-offset-2">marceli.to</a>
     </div>
 	</div>
-
 	@fluxScripts
 </body>
 </html>
