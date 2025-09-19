@@ -62,16 +62,14 @@
             </flux:badge>
           </flux:table.cell>
 
-          <flux:table.cell class="max-w-md">
-            <div class="truncate text-sm" title="{{ $log->message }}">
+          <flux:table.cell class="max-w-xs">
+            <div class="truncate" title="{{ $log->message }}">
               {{ $log->message }}
             </div>
           </flux:table.cell>
 
-          <flux:table.cell>
-            <div class="text-sm">
-              <div class="font-medium">{{ $log->app_name ?? 'Unknown' }}</div>
-            </div>
+          <flux:table.cell class="max-w-xs">
+            <div class="truncate font-medium">{{ $log->app_name ?? 'Unknown' }}</div>
           </flux:table.cell>
 
           <flux:table.cell>
