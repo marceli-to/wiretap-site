@@ -6,9 +6,19 @@
         Taps into your systems and monitors and analyzes your application logs in (almost) realtime.
       </p>
     </div>
-    <div class="mt-4 sm:mt-0">
+    <div class="mt-4 sm:mt-0 flex gap-2">
+      @if($search || $levelFilter || $envFilter)
+        <flux:button
+          variant="danger"
+          icon="trash"
+          iconVariant="outline"
+          wire:click="deleteFilteredLogs"
+          wire:confirm="Are you sure you want to delete all logs matching the current filters? This action cannot be undone.">
+          Delete
+        </flux:button>
+      @endif
       <flux:modal.trigger name="filters">
-        <flux:button variant="outline" icon="funnel" iconVariant="outline">Filters</flux:button>
+        <flux:button variant="primary" color="zinc" icon="funnel" iconVariant="outline">Filters</flux:button>
       </flux:modal.trigger>
     </div>
   </div>
@@ -155,17 +165,9 @@
         <flux:button variant="subtle" wire:click="clearFilters">Clear filters</flux:button>
         <flux:spacer />
         <flux:modal.close>
-          <flux:button variant="primary">Apply</flux:button>
+          <flux:button variant="primary" color="zinc">Apply</flux:button>
         </flux:modal.close>
       </div>
-      <flux:button
-        variant="danger"
-        icon="trash"
-        iconVariant="outline"
-        wire:click="deleteFilteredLogs"
-        wire:confirm="Are you sure you want to delete all logs matching the current filters? This action cannot be undone.">
-        Delete Filtered
-      </flux:button>
     </div>
   </flux:modal>
 
