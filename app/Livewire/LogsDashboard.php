@@ -12,6 +12,7 @@ class LogsDashboard extends Component
 	public string $search = '';
 	public string $levelFilter = '';
 	public string $envFilter = '';
+	public string $appFilter = '';
 	public string $sortBy = 'timestamp';
 	public string $sortDirection = 'desc';
 
@@ -26,6 +27,7 @@ class LogsDashboard extends Component
 		'search'        => ['except' => ''],
 		'levelFilter'   => ['except' => ''],
 		'envFilter'     => ['except' => ''],
+		'appFilter'     => ['except' => ''],
 		'sortBy'        => ['except' => 'timestamp'],
 		'sortDirection' => ['except' => 'desc'],
 	];
@@ -33,6 +35,7 @@ class LogsDashboard extends Component
 	public function updatingSearch()      { $this->resetPage(); }
 	public function updatingLevelFilter() { $this->resetPage(); }
 	public function updatingEnvFilter()   { $this->resetPage(); }
+	public function updatingAppFilter()   { $this->resetPage(); }
 
 	public function setSort(string $field): void
 	{
@@ -52,7 +55,7 @@ class LogsDashboard extends Component
 
 	public function clearFilters(): void
 	{
-		$this->reset(['search', 'levelFilter', 'envFilter']);
+		$this->reset(['search', 'levelFilter', 'envFilter', 'appFilter']);
 		$this->sortBy = 'timestamp';
 		$this->sortDirection = 'desc';
 	}
@@ -80,7 +83,8 @@ class LogsDashboard extends Component
 				});
 			})
 			->when($this->levelFilter, fn ($q, $lvl) => $q->where('level', $lvl))
-			->when($this->envFilter, fn ($q) => $q->where('app_env', $this->envFilter));
+			->when($this->envFilter, fn ($q) => $q->where('app_env', $this->envFilter))
+			->when($this->appFilter, fn ($q) => $q->where('app_name', $this->appFilter));
 
 		$deletedCount = $query->count();
 		$query->delete();
@@ -136,6 +140,7 @@ class LogsDashboard extends Component
 			})
 			->when($this->levelFilter, fn ($q, $lvl) => $q->where('level', $lvl))
 			->when($this->envFilter, fn ($q) => $q->where('app_env', $this->envFilter))
+			->when($this->appFilter, fn ($q) => $q->where('app_name', $this->appFilter))
 			->orderBy($this->sortBy, $this->sortDirection)
 			->paginate(15);
 
@@ -152,6 +157,13 @@ class LogsDashboard extends Component
 			->orderBy('app_env')
 			->pluck('app_env');
 
-		return view('livewire.logs-dashboard', compact('logs', 'levels', 'environments'))->layout('layouts.app');
+		$applications = Log::query()
+			->select('app_name')
+			->distinct()
+			->whereNotNull('app_name')
+			->orderBy('app_name')
+			->pluck('app_name');
+
+		return view('livewire.logs-dashboard', compact('logs', 'levels', 'environments', 'applications'))->layout('layouts.app');
 	}
 }

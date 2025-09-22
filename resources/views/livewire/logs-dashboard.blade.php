@@ -7,7 +7,7 @@
       </p>
     </div>
     <div class="mt-4 sm:mt-0 flex gap-2">
-      @if($search || $levelFilter || $envFilter)
+      @if($search || $levelFilter || $envFilter || $appFilter)
         <flux:button
           variant="danger"
           icon="trash"
@@ -155,6 +155,18 @@
               <flux:select.option value="">All Environments</flux:select.option>
               @foreach($environments as $env)
                 <flux:select.option value="{{ $env }}">{{ ucfirst($env) }}</flux:select.option>
+              @endforeach
+            </flux:select>
+          </flux:field>
+        </div>
+
+        <div>
+          <flux:field>
+            <flux:label>Application</flux:label>
+            <flux:select wire:model.live="appFilter" placeholder="Filter by application">
+              <flux:select.option value="">All Applications</flux:select.option>
+              @foreach($applications as $app)
+                <flux:select.option value="{{ $app }}">{{ $app }}</flux:select.option>
               @endforeach
             </flux:select>
           </flux:field>
