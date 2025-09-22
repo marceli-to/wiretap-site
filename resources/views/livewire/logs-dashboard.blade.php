@@ -142,7 +142,6 @@
           <flux:field>
             <flux:label>Environment</flux:label>
             <flux:select wire:model.live="envFilter" placeholder="Filter by environment">
-              <flux:select.option value="hide_local">Hide Local</flux:select.option>
               <flux:select.option value="">All Environments</flux:select.option>
               @foreach($environments as $env)
                 <flux:select.option value="{{ $env }}">{{ ucfirst($env) }}</flux:select.option>
@@ -159,6 +158,14 @@
           <flux:button variant="primary">Apply</flux:button>
         </flux:modal.close>
       </div>
+      <flux:button
+        variant="danger"
+        icon="trash"
+        iconVariant="outline"
+        wire:click="deleteFilteredLogs"
+        wire:confirm="Are you sure you want to delete all logs matching the current filters? This action cannot be undone.">
+        Delete Filtered
+      </flux:button>
     </div>
   </flux:modal>
 

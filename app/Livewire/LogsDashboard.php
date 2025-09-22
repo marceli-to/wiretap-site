@@ -11,7 +11,7 @@ class LogsDashboard extends Component
 	/** Filters & table state */
 	public string $search = '';
 	public string $levelFilter = '';
-	public string $envFilter = 'hide_local';
+	public string $envFilter = '';
 	public string $sortBy = 'timestamp';
 	public string $sortDirection = 'desc';
 
@@ -25,7 +25,7 @@ class LogsDashboard extends Component
 	protected $queryString = [
 		'search'        => ['except' => ''],
 		'levelFilter'   => ['except' => ''],
-		'envFilter'     => ['except' => 'hide_local'],
+		'envFilter'     => ['except' => ''],
 		'sortBy'        => ['except' => 'timestamp'],
 		'sortDirection' => ['except' => 'desc'],
 	];
@@ -53,7 +53,6 @@ class LogsDashboard extends Component
 	public function clearFilters(): void
 	{
 		$this->reset(['search', 'levelFilter', 'envFilter']);
-		$this->envFilter = 'hide_local';
 		$this->sortBy = 'timestamp';
 		$this->sortDirection = 'desc';
 	}
@@ -67,6 +66,27 @@ class LogsDashboard extends Component
 	{
 		Log::query()->find($id)?->delete();
 		$this->resetPage();
+	}
+
+	public function deleteFilteredLogs(): void
+	{
+		$query = Log::query()
+			->when($this->search, function ($q, $term) {
+				$q->where(function ($q) use ($term) {
+					$like = "%{$term}%";
+					$q->where('message', 'like', $like)
+					  ->orWhere('app_name', 'like', $like)
+					  ->orWhere('server_hostname', 'like', $like);
+				});
+			})
+			->when($this->levelFilter, fn ($q, $lvl) => $q->where('level', $lvl))
+			->when($this->envFilter, fn ($q) => $q->where('app_env', $this->envFilter));
+
+		$deletedCount = $query->count();
+		$query->delete();
+
+		$this->resetPage();
+		$this->dispatch('notify', 'success', "Deleted {$deletedCount} log records");
 	}
 
 	/** Livewire computed property: $this->activeContext */
@@ -115,8 +135,7 @@ class LogsDashboard extends Component
 				});
 			})
 			->when($this->levelFilter, fn ($q, $lvl) => $q->where('level', $lvl))
-			->when($this->envFilter === 'hide_local', fn ($q) => $q->where('app_env', '!=', 'local'))
-			->when($this->envFilter && $this->envFilter !== 'hide_local' && $this->envFilter !== '', fn ($q) => $q->where('app_env', $this->envFilter))
+			->when($this->envFilter, fn ($q) => $q->where('app_env', $this->envFilter))
 			->orderBy($this->sortBy, $this->sortDirection)
 			->paginate(15);
 
