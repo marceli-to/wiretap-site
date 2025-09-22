@@ -89,7 +89,7 @@ class LogsDashboard extends Component
 		$deletedCount = $query->count();
 		$query->delete();
 
-		$this->resetPage();
+		$this->clearFilters();
 		$this->dispatch('notify', 'success', "Deleted {$deletedCount} log records");
 	}
 
