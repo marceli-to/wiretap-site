@@ -9,7 +9,7 @@ class StoreLogAction
 	public function execute(array $data): Log
 	{
 		$log = Log::create([
-			'timestamp' => $data['timestamp'],
+			'timestamp' => \Carbon\Carbon::parse($data['timestamp'])->setTimezone(config('app.timezone')),
 			'level' => $data['level'],
 			'message' => $data['message'],
 			'context' => $data['context'] ?? null,
