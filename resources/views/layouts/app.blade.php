@@ -31,7 +31,7 @@
 
 
 			<flux:dropdown position="bottom" align="end">
-        <flux:profile avatar="/img/avatar.jpg" />
+        <flux:profile circle avatar="/img/avatar.jpg" />
 				<flux:menu>
 					{{-- <flux:menu.item icon="user-circle">Profile</flux:menu.item>
 					<flux:menu.item icon="cog-6-tooth">Settings</flux:menu.item>

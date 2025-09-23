@@ -215,7 +215,7 @@
           <!-- Server Information -->
           <h3 class="font-medium text-sm text-gray-900 dark:text-white mb-3">Server Information</h3>
           <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-            <div class="grid grid-cols-2 gap-4 text-sm">
+            <div class="flex flex-col md:grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <span class="font-medium text-gray-900 dark:text-gray-400">Hostname:</span>
                 <div class="mt-1">{{ $this->activeLog->server_hostname ?? 'Unknown' }}</div>
