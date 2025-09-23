@@ -1,4 +1,4 @@
-<div class="space-y-8" wire:poll.5s>
+<div class="space-y-8 !bg-red-500" wire:poll.5s>
   <!-- Header -->
   <div class="sm:flex sm:items-center sm:justify-between">
     <div>
