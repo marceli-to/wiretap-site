@@ -11,7 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::table('logs', function (Blueprint $table) {
+            $table->timestamp('fixed_at')->nullable();
+        });
     }
 
     /**
@@ -19,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('logs', function (Blueprint $table) {
+            $table->dropColumn('fixed_at');
+        });
     }
 };
