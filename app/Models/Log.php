@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Log extends Model
 {
 	use SoftDeletes;
+  
 	protected $fillable = [
 		'timestamp',
 		'level',
@@ -18,10 +19,12 @@ class Log extends Model
 		'app_url',
 		'server_hostname',
 		'server_ip',
+		'fixed_at',
 	];
 
 	protected $casts = [
 		'timestamp' => 'datetime',
 		'context' => 'array',
+		'fixed_at' => 'datetime',
 	];
 }

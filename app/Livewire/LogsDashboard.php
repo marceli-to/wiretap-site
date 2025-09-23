@@ -13,6 +13,7 @@ class LogsDashboard extends Component
 	public string $levelFilter = '';
 	public string $envFilter = '';
 	public string $appFilter = '';
+	public string $fixedFilter = '';
 	public string $sortBy = 'timestamp';
 	public string $sortDirection = 'desc';
 
@@ -28,6 +29,7 @@ class LogsDashboard extends Component
 		'levelFilter'   => ['except' => ''],
 		'envFilter'     => ['except' => ''],
 		'appFilter'     => ['except' => ''],
+		'fixedFilter'   => ['except' => ''],
 		'sortBy'        => ['except' => 'timestamp'],
 		'sortDirection' => ['except' => 'desc'],
 	];
@@ -36,6 +38,7 @@ class LogsDashboard extends Component
 	public function updatingLevelFilter() { $this->resetPage(); }
 	public function updatingEnvFilter()   { $this->resetPage(); }
 	public function updatingAppFilter()   { $this->resetPage(); }
+	public function updatingFixedFilter() { $this->resetPage(); }
 
 	public function setSort(string $field): void
 	{
@@ -55,7 +58,7 @@ class LogsDashboard extends Component
 
 	public function clearFilters(): void
 	{
-		$this->reset(['search', 'levelFilter', 'envFilter', 'appFilter']);
+		$this->reset(['search', 'levelFilter', 'envFilter', 'appFilter', 'fixedFilter']);
 		$this->sortBy = 'timestamp';
 		$this->sortDirection = 'desc';
 	}
@@ -71,6 +74,15 @@ class LogsDashboard extends Component
 		$this->resetPage();
 	}
 
+	public function toggleFixed(int $id): void
+	{
+		$log = Log::query()->find($id);
+		if ($log) {
+			$log->fixed_at = $log->fixed_at ? null : now();
+			$log->save();
+		}
+	}
+
 	public function deleteFilteredLogs(): void
 	{
 		$query = Log::query()
@@ -84,7 +96,10 @@ class LogsDashboard extends Component
 			})
 			->when($this->levelFilter, fn ($q, $lvl) => $q->where('level', $lvl))
 			->when($this->envFilter, fn ($q) => $q->where('app_env', $this->envFilter))
-			->when($this->appFilter, fn ($q) => $q->where('app_name', $this->appFilter));
+			->when($this->appFilter, fn ($q) => $q->where('app_name', $this->appFilter))
+			->when($this->fixedFilter === 'fixed', fn ($q) => $q->whereNotNull('fixed_at'))
+			->when($this->fixedFilter === 'not_fixed', fn ($q) => $q->whereNull('fixed_at'))
+			->when($this->fixedFilter === '', fn ($q) => $q->whereNull('fixed_at'));
 
 		$deletedCount = $query->count();
 		$query->delete();
@@ -141,6 +156,9 @@ class LogsDashboard extends Component
 			->when($this->levelFilter, fn ($q, $lvl) => $q->where('level', $lvl))
 			->when($this->envFilter, fn ($q) => $q->where('app_env', $this->envFilter))
 			->when($this->appFilter, fn ($q) => $q->where('app_name', $this->appFilter))
+			->when($this->fixedFilter === 'fixed', fn ($q) => $q->whereNotNull('fixed_at'))
+			->when($this->fixedFilter === 'not_fixed', fn ($q) => $q->whereNull('fixed_at'))
+			->when($this->fixedFilter === '', fn ($q) => $q->whereNull('fixed_at'))
 			->orderBy($this->sortBy, $this->sortDirection)
 			->paginate(15);
 

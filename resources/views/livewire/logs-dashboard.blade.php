@@ -7,7 +7,7 @@
       </p>
     </div>
     <div class="mt-4 sm:mt-0 flex gap-2">
-      @if($search || $levelFilter || $envFilter || $appFilter)
+      @if($search || $levelFilter || $envFilter || $appFilter || $fixedFilter)
         <flux:button
           variant="danger"
           icon="trash"
@@ -94,6 +94,14 @@
 
           <flux:table.cell align="end">
             <div class="flex justify-end">
+              <flux:button
+                icon="check-circle"
+                iconVariant="outline"
+                size="sm"
+                variant="subtle"
+                class="{{ $log->fixed_at ? '!text-green-500' : 'text-gray-400' }}"
+                wire:click="toggleFixed({{ $log->id }})"
+                title="{{ $log->fixed_at ? 'Mark as not fixed' : 'Mark as fixed' }}" />
               @if($log->context)
                 <flux:modal.trigger name="context">
                   <flux:button icon="arrow-top-right-on-square" iconVariant="outline" size="sm" variant="subtle" wire:click="showContext({{ $log->id }})" />
@@ -168,6 +176,17 @@
               @foreach($applications as $app)
                 <flux:select.option value="{{ $app }}">{{ $app }}</flux:select.option>
               @endforeach
+            </flux:select>
+          </flux:field>
+        </div>
+
+        <div>
+          <flux:field>
+            <flux:label>Fixed Status</flux:label>
+            <flux:select wire:model.live="fixedFilter" placeholder="Filter by status">
+              <flux:select.option value="">All Records</flux:select.option>
+              <flux:select.option value="fixed">Fixed</flux:select.option>
+              <flux:select.option value="not_fixed">Not Fixed</flux:select.option>
             </flux:select>
           </flux:field>
         </div>
